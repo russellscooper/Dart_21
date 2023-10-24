@@ -1,4 +1,7 @@
 //BUST OR BOOM! Lets see how I stack up in a coding challenge!
+//This is just a game of 21 I'm working on. Nothing special and surely full of bugs. I am fully aware it does not accurately follow casino black jack.
+//Please find it in your heart to forgive me.
+
 // ignore_for_file: unused_local_variable
 
 import 'dart:io';
@@ -6,6 +9,8 @@ import 'FTCD.dart';
 
 //Main
 void main() {
+  //Main loop
+
   //Deal Cards
   List<String> keys = deck.keys.toList();
   keys.shuffle();
@@ -42,5 +47,42 @@ void main() {
 
   stdout.writeln('What will it be? ');
   String? player_action = stdin.readLineSync();
-  //to do - add hit function and endgame.
+
+  int currentcard = 4;
+  String hitcardface = keys[currentcard];
+  var hitcardvalue = deck[hitcardface];
+
+  hitme() {
+    if (player_total < 21) {
+      print('You Drew a $hitcardface');
+      print('Hit again? Y/N');
+      currentcard++;
+      int newtotal = player_total + hitcardvalue!;
+      return newtotal;
+    } else {
+      print('You loose!');
+    }
+  }
+
+  bool player_win = player_total > dealer_total;
+
+  bool dealer_win = !player_win;
+
+  bool draw = player_total == dealer_total;
+
+  String flop = 'Dealers hand $dealer_one_cardface $dealer_two_cardface';
+
+  if (player_win == true) {
+    print(
+        'You won and are the rootiest tootiest card player in the wild wild west!');
+    print(flop);
+  } else if (dealer_win == true) {
+    print('Sorry pardner, You are just out of luck!');
+    print(flop);
+  } else if (draw == true) {
+    print('Looks like this heres a draw!');
+    print(flop);
+  } else {
+    print('something is wrong!');
+  }
 }
